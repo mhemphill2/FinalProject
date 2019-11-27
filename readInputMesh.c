@@ -1,36 +1,43 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "readInputMesh.h"
 
-#define buff 1028;
-
-double* readInputMesh(const char* filename) {
-	printf("hul igennem\n");
+double* readInputMesh(const char* filename, size_t* n_mesh, size_t* n_entries) {
 	
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
 		printf("Can't open file\n");
 		return 1;
 	}
+	
+	char str[56];
+	int strl = 56;
+	double n = atof(fgets(str, strl, fp));
+	int entry = n * 3 * 3;
+	//printf("entry= %d\n", entry);
+	double* mesh = (double*)malloc(entry*sizeof(double));
+	
 
-	char str[5];
-	size_t strl = 0;
-
-	float n = atof(fgets(str, 1028, fp));
-	printf("n= %lf\n", n);
-
-	for (size_t i = 0; i < n * 3; i++) {
-
-	}
-	//is it best to load it in to 9 or three columns?
-	while (fgets(str,strl,fp))	{
-		if (strlen(str) > strl) {
-			strl = strlen(str);
-			continue;
+	for (size_t i = 0; i < n*3; i++)
+	{
+		fgets(str, strl, fp);
+		//printf("%s\n", str);
+		char* token = strtok(str, ",");
+		size_t j=0;
+		while (token != NULL) {
+			mesh[i * 3 + j] = atof(token);
+			j++;
+			token = strtok(NULL, ",");
 		}
-		printf("str len = %d\n",strlen(str));
 	}
 
+	for(size_t i = 0; i < entry; i++)
+	{
+		printf("mesh[%zu]=%lf\n", i, mesh[i]);
+	}
 
-	return 0;
+	fclose(fp);
+
+	return mesh;
 }

@@ -5,6 +5,6 @@
 
 #include <stddef.h>
 
-double* readInputMesh(const char* filename);
+double* readInputMesh(const char* filename, size_t *n_mesh, size_t *n_entries);
 
 #endif
