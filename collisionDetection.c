@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "readInputMesh.h"
+#include "outputFile.h"
 
 int main() {
 
@@ -35,6 +36,8 @@ int main() {
   	printf("\n");
   	}
 	printf("End of collison detection TESTING\n");
+
+	outputFile(arr);
 
 	//free values
 	free(radNS);
