@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "readInputMesh.h"
+#include "outputFile.h"
 
 int main() {
 
@@ -68,6 +69,8 @@ int main() {
 
 
 
+
+	outputFile(arr);
 
 	//free values
 	free(meshentries);
