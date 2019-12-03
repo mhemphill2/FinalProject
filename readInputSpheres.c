@@ -6,7 +6,7 @@
 #include "readInputSpheres.h"
 
 //Function to return radius and # of spheres
-double* readInputSpheresradNS(const char* filename1){
+double* InputSpheresradNS(const char* filename1){
 	FILE* fp;
 	fp = fopen(filename1, "r");
 	char line[200];
@@ -20,7 +20,7 @@ double* readInputSpheresradNS(const char* filename1){
 	//Check if file exists
 	if (!fp) {
 		printf("Can't open file\n");
-		return 1;
+		return 0;
 	}
 	//Goes through the first 3 lines to obtain radius and # of spheres
 	//Returns 2x1 matrix of radius and # of spheres
@@ -34,7 +34,7 @@ double* readInputSpheresradNS(const char* filename1){
 	return radNS;
 }
 
-double* readInputSpheresCoord(const char* filename1){
+double* InputSpheresCoord(const char* filename1){
 	FILE* fp;
 	fp = fopen(filename1, "r");
 	char line[200];
@@ -49,7 +49,7 @@ double* readInputSpheresCoord(const char* filename1){
 	//Check if file exist
 	if (!fp) {
 		printf("Can't open file\n");
-		return 1;
+		return 0;
 	}
 	//passes through first 3 lines of code
 	xyz = fgets(line,200,fp);

@@ -5,7 +5,7 @@
 
 #include <stddef.h>
 
-double* readInputSpheresradNS(const char* filename1);
-double* readInputSpheresCoord(const char* filename1);
+double* InputSpheresradNS(const char* filename1);
+double* InputSpheresCoord(const char* filename1);
 
 #endif

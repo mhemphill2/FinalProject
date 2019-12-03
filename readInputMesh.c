@@ -3,8 +3,8 @@
 #include <string.h>
 #include "readInputMesh.h"
 
-double* readInputMesh(const char* filename, size_t* n_mesh, size_t* n_entries) {
-	
+int* readInputMeshEntries(const char* filename) {
+	int* meshentries = (int*)malloc(1 * sizeof(int));	
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
 		printf("Can't open file\n");
@@ -13,6 +13,20 @@ double* readInputMesh(const char* filename, size_t* n_mesh, size_t* n_entries) {
 	
 	char str[56];
 	int strl = 56;
+	int n = atof(fgets(str, strl, fp));
+	meshentries[0] = n;
+	return meshentries;
+}
+double* readInputMesh(const char* filename) {
+	
+	FILE* fp = fopen(filename, "r");
+	if (!fp) {
+		printf("Can't open file\n");
+		return 1;
+	}
+	
+	char str[256];
+	int strl = 256;
 	double n = atof(fgets(str, strl, fp));
 	int entry = n * 3 * 3;
 	//printf("entry= %d\n", entry);
@@ -34,7 +48,7 @@ double* readInputMesh(const char* filename, size_t* n_mesh, size_t* n_entries) {
 
 	for(size_t i = 0; i < entry; i++)
 	{
-		printf("mesh[%zu]=%lf\n", i, mesh[i]);
+//		printf("mesh[%zu]=%lf\n", i, mesh[i]);
 	}
 
 	fclose(fp);
