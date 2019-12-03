@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "readInputMesh.h"
-#include "outputFile.h"
-
+#include "readInputSpheres.h"
+//temporary stuff - run command
+//gcc collisionDetection.c readInputSpheres.c readInputMesh.c -Wall -O3 -o coldet -lm
 int main() {
 
 	const char filename[] = "mesh.input.obj";
@@ -52,7 +54,7 @@ int main() {
   	}
 	printf("End of triangle TESTING\n");
 
-	printf("Start of sphere TESTING\n");
+	printf("\nStart of sphere TESTING\n");
 	printf("radius of spheres --> %f\n", rad);
 	printf("Number of spheres --> %f\n", ns);
   	for (i = 0; i < n_rows; i++) {
@@ -63,14 +65,59 @@ int main() {
   	}
 	printf("End of sphere TESTING\n");
 
-// Collision detection, closest point to triangle, in work
+// Collision detection, order: (s,t) ; (i,j) ; (sphere,triangle)
+// Need to compute all (point - point), (point - line), (point - plane)
 
+	// Computes point - point (distance from sphere center to each vertex of triangle)
+	// d = sqrt((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2)
+	int spheres, tri;
+	double d1,d2,d3;
+	printf("\nDistance to vertices\n");
+	for (spheres = 0; spheres < ns; spheres++) {
+		for (tri = 0; tri < nt; tri++) {
+			printf("Sphere ID: %d  ---  Triangle ID: %d\n", spheres, tri);
+			d1 = sqrt(pow((arr[spheres * n_cols + 0]-mesh[tri * 9 + 0]),2)+pow((arr[spheres * n_cols + 1]-mesh[tri * 9 + 1]),2)+pow((arr[spheres * n_cols + 2]-mesh[tri * 9 + 2]),2));
+			printf("d1 = %f   ", d1);
 
+			d2 = sqrt(pow((arr[spheres * n_cols + 0]-mesh[tri * 9 + 3]),2)+pow((arr[spheres * n_cols + 1]-mesh[tri * 9 + 4]),2)+pow((arr[spheres * n_cols + 2]-mesh[tri * 9 + 5]),2));
+			printf("d2 = %f   ", d2);
 
+			d3 = sqrt(pow((arr[spheres * n_cols + 0]-mesh[tri * 9 + 6]),2)+pow((arr[spheres * n_cols + 1]-mesh[tri * 9 + 7]),2)+pow((arr[spheres * n_cols + 2]-mesh[tri * 9 + 8]),2));
+			printf("d3 = %f\n", d3);
+			//will put into array
+		}
+	}
 
+// point - line
 
+// 1st) point - plane -- then if point inside triangle on plane -- point could be on plane outside of triangle
 
-	outputFile(arr);
+	//calculateing normal vector to triangle (p1, p2, p3)
+	// a = p2-p1  ;  b = p3-p1
+	// nx = ay*bz - az*by  ;  ny = az*bx - ax*bz  ;  nz = ax*by - ay*bx
+	double ax, ay, az, bx, by, bz, nxx, nyy, nzz, nx, ny, nz;
+	printf("\nNormal Vectors for Triangles\n");
+//	for (spheres = 0; spheres < ns; spheres++) {
+		for (tri = 0; tri < nt; tri++) {
+			printf("Triangle ID: %d\n", tri);
+			ax = mesh[tri * 9 + 3] - mesh[tri * 9 + 0];
+			ay = mesh[tri * 9 + 4] - mesh[tri * 9 + 1];
+			az = mesh[tri * 9 + 5] - mesh[tri * 9 + 2];
+			bx = mesh[tri * 9 + 6] - mesh[tri * 9 + 0];
+			by = mesh[tri * 9 + 7] - mesh[tri * 9 + 1];
+			bz = mesh[tri * 9 + 8] - mesh[tri * 9 + 2];
+			//non-normalized unit vector
+			nxx = (ay*bz) - (az*by);
+			nyy = (az*bx) - (ax*bz);
+			nzz = (ax*by) - (ay*bx);
+			//normalized unit vector (nx,ny,nz / sqrt(nx^2+ny^2+nz^2)
+			nx = nxx/sqrt(pow(nxx,2)+pow(nyy,2)+pow(nzz,2));
+			ny = nyy/sqrt(pow(nxx,2)+pow(nyy,2)+pow(nzz,2));
+			nz = nzz/sqrt(pow(nxx,2)+pow(nyy,2)+pow(nzz,2));
+			printf("nx = %f  :  ny = %f  :  nz = %f\n", nx, ny, nz);
+		}
+//	}
+
 
 	//free values
 	free(meshentries);
