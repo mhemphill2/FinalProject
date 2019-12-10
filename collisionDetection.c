@@ -7,6 +7,7 @@
 //gcc collisionDetection.c readInputSpheres.c readInputMesh.c -Wall -O3 -o coldet -lm
 int main() {
 
+	//What is the exact filenames/types and how should we read them? input arguments?
 	const char filename[] = "mesh.input.obj";
 	const char filename1[] = "spheres.input.csv";
 	//Why is the step beneath done??
@@ -19,9 +20,9 @@ int main() {
 	int nTriangles = 0;
 	int nMeshEntries = 0;
 	double* mesh;
-	
 	//ReadInputMesh returning 1D array containing values
 	mesh = readInputMesh(filename, &nTriangles, &nMeshEntries);
+
 	//Test reading works:
 	/*printf("nTriangles=%d, nMeshe=%d\n", nTriangles, nMeshEntries);
 	for (size_t i = 0; i < nMeshEntries; i++)
@@ -35,15 +36,17 @@ int main() {
 //	int i,j;
 	int n_cols = 3;
 	double rad;
-	double ns;
-	double* radNS = (double*)malloc(2 * sizeof(double));
-	radNS = InputSpheresradNS(filename1);	//Function call to return radius and # of spheres
-	rad = radNS[0];		//Radius
-	ns = radNS[1];		//# of spheres
+	int ns;
+	double* sphereArr = readInputSpheres(filename1, &rad, &ns);
 
-	int n_rows = ns;
-	double* arr = (double*)malloc(n_rows * n_cols * sizeof(double));	
-	arr = InputSpheresCoord(filename1);	//Function call to return array of x,y,z sphere coordinates
+	//double* radNS = (double*)malloc(2 * sizeof(double));
+	//radNS = InputSpheresradNS(filename1);	//Function call to return radius and # of spheres
+	////rad = radNS[0];		//Radius
+	////ns = radNS[1];		//# of spheres
+
+	//int n_rows = ns;
+	//double* arr = (double*)malloc(n_rows * n_cols * sizeof(double));	
+	//arr = InputSpheresCoord(filename1);	//Function call to return array of x,y,z sphere coordinates
 
 //Will remove before final build, TESTING INPUT VALUES
 	printf("Start of triangle TESTING\n");
@@ -61,9 +64,9 @@ int main() {
 	printf("\nStart of sphere TESTING\n");
 	printf("radius of spheres --> %f\n", rad);
 	printf("Number of spheres --> %f\n", ns);
-  	for (i = 0; i < n_rows; i++) {
+  	for (i = 0; i < ns; i++) {
     		for (j = 0; j < n_cols; j++) {
-      		printf("%lf ", arr[i * n_cols + j]);
+      		printf("%lf ", sphereArr[i * n_cols + j]);
     		}
   	printf("\n");
   	}
@@ -80,13 +83,13 @@ int main() {
 	for (spheres = 0; spheres < ns; spheres++) {
 		for (tri = 0; tri < nTriangles; tri++) {
 			printf("Sphere ID: %d  ---  Triangle ID: %d\n", spheres, tri);
-			d1 = sqrt(pow((arr[spheres * n_cols + 0]-mesh[tri * 9 + 0]),2)+pow((arr[spheres * n_cols + 1]-mesh[tri * 9 + 1]),2)+pow((arr[spheres * n_cols + 2]-mesh[tri * 9 + 2]),2));
+			d1 = sqrt(pow((sphereArr[spheres * n_cols + 0]-mesh[tri * 9 + 0]),2)+pow((sphereArr[spheres * n_cols + 1]-mesh[tri * 9 + 1]),2)+pow((sphereArr[spheres * n_cols + 2]-mesh[tri * 9 + 2]),2));
 			printf("d1 = %f   ", d1);
 
-			d2 = sqrt(pow((arr[spheres * n_cols + 0]-mesh[tri * 9 + 3]),2)+pow((arr[spheres * n_cols + 1]-mesh[tri * 9 + 4]),2)+pow((arr[spheres * n_cols + 2]-mesh[tri * 9 + 5]),2));
+			d2 = sqrt(pow((sphereArr[spheres * n_cols + 0]-mesh[tri * 9 + 3]),2)+pow((sphereArr[spheres * n_cols + 1]-mesh[tri * 9 + 4]),2)+pow((sphereArr[spheres * n_cols + 2]-mesh[tri * 9 + 5]),2));
 			printf("d2 = %f   ", d2);
 
-			d3 = sqrt(pow((arr[spheres * n_cols + 0]-mesh[tri * 9 + 6]),2)+pow((arr[spheres * n_cols + 1]-mesh[tri * 9 + 7]),2)+pow((arr[spheres * n_cols + 2]-mesh[tri * 9 + 8]),2));
+			d3 = sqrt(pow((sphereArr[spheres * n_cols + 0]-mesh[tri * 9 + 6]),2)+pow((sphereArr[spheres * n_cols + 1]-mesh[tri * 9 + 7]),2)+pow((sphereArr[spheres * n_cols + 2]-mesh[tri * 9 + 8]),2));
 			printf("d3 = %f\n", d3);
 			//will put into array
 		}
@@ -125,7 +128,6 @@ int main() {
 
 	//free values
 	free(mesh);
-	free(radNS);
-	free(arr);
+	free(sphereArr);
 	return 0;
 }

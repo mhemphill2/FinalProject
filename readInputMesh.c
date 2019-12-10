@@ -11,6 +11,7 @@ double* readInputMesh(const char* filename, int* nTriangles, int* nMeshEntries) 
 		return 1;
 	}
 	
+	//Buffer length to string
 	char str[256];
 	int strl = 256;
 	*nTriangles = atof(fgets(str, strl, fp));
