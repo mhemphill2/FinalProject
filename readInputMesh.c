@@ -3,21 +3,7 @@
 #include <string.h>
 #include "readInputMesh.h"
 
-int* readInputMeshEntries(const char* filename) {
-	int* meshentries = (int*)malloc(1 * sizeof(int));	
-	FILE* fp = fopen(filename, "r");
-	if (!fp) {
-		printf("Can't open file\n");
-		return 1;
-	}
-	
-	char str[56];
-	int strl = 56;
-	int n = atof(fgets(str, strl, fp));
-	meshentries[0] = n;
-	return meshentries;
-}
-double* readInputMesh(const char* filename) {
+double* readInputMesh(const char* filename, int* nTriangles, int* nMeshEntries) {
 	
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
@@ -27,14 +13,16 @@ double* readInputMesh(const char* filename) {
 	
 	char str[256];
 	int strl = 256;
-	double n = atof(fgets(str, strl, fp));
-	int entry = n * 3 * 3;
+	*nTriangles = atof(fgets(str, strl, fp));
+	//nTriangles times 3 rows pr triangle times  entries pr row
+	*nMeshEntries = *nTriangles * 3 * 3;
 	//printf("entry= %d\n", entry);
-	double* mesh = (double*)malloc(entry*sizeof(double));
+	double* mesh = (double*)malloc(*nMeshEntries*sizeof(double));
 	
-
-	for (size_t i = 0; i < n*3; i++)
+	//nTriangles*3 equals n rows
+	for (size_t i = 0; i < *nTriangles*3; i++)
 	{
+		//fgets reads each line of the input file
 		fgets(str, strl, fp);
 		//printf("%s\n", str);
 		char* token = strtok(str, ",");
@@ -46,10 +34,11 @@ double* readInputMesh(const char* filename) {
 		}
 	}
 
-	for(size_t i = 0; i < entry; i++)
-	{
+	//For testing. Delete before final
+//	for(size_t i = 0; i < *nMeshEntries; i++)
+//	{
 //		printf("mesh[%zu]=%lf\n", i, mesh[i]);
-	}
+//	}
 
 	fclose(fp);
 

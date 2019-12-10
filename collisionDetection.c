@@ -9,23 +9,27 @@ int main() {
 
 	const char filename[] = "mesh.input.obj";
 	const char filename1[] = "spheres.input.csv";
+	//Why is the step beneath done??
 	int* readInputMeshEntries(filename);
 	double* readInputMesh(filename);
 	double* InputSpheresradNS(filename1);
 	double* InputSpheresCoord(filename1);
 
-//Read inputs from mesh
-	int nt;		//# of triangles
-	int* meshentries = (int*)malloc(1 * sizeof(int));
-	meshentries = readInputMeshEntries(filename);
-	nt = meshentries[0];		//# of triangles
-	int entry = nt * 3 * 3;		//# of coordinate entries
-	double* mesh = (double*)malloc(entry*sizeof(double));
-	mesh = readInputMesh(filename);		//inputs mesh
+	//Initialize mesh metrics
+	int nTriangles = 0;
+	int nMeshEntries = 0;
+	double* mesh;
+	
+	//ReadInputMesh returning 1D array containing values
+	mesh = readInputMesh(filename, &nTriangles, &nMeshEntries);
+	//Test reading works:
+	/*printf("nTriangles=%d, nMeshe=%d\n", nTriangles, nMeshEntries);
+	for (size_t i = 0; i < nMeshEntries; i++)
+	{
+		printf("mesh[%d]=%f\n", i, mesh[i]);
+	}*/
 
-	int i,j;
-
-
+	int i, j;
 
 //Reading inputs from "readInputSpheres.c" 
 //	int i,j;
@@ -43,10 +47,10 @@ int main() {
 
 //Will remove before final build, TESTING INPUT VALUES
 	printf("Start of triangle TESTING\n");
-	printf("nt = %d\n", nt);
-	printf("entries = %d\n", entry);
+	printf("nt = %d\n", nTriangles);
+	printf("entries = %d\n", nMeshEntries);
 	//prints x1 y1 z1 x2 y2 z2 x3 y3 z3 coordinates for each triangle
-  	for (i = 0; i < nt; i++) {
+  	for (i = 0; i < nTriangles; i++) {
     		for (j = 0; j < 9; j++) {
       		printf("%lf ", mesh[i * 9 + j]);
     		}
@@ -74,7 +78,7 @@ int main() {
 	double d1,d2,d3;
 	printf("\nDistance to vertices\n");
 	for (spheres = 0; spheres < ns; spheres++) {
-		for (tri = 0; tri < nt; tri++) {
+		for (tri = 0; tri < nTriangles; tri++) {
 			printf("Sphere ID: %d  ---  Triangle ID: %d\n", spheres, tri);
 			d1 = sqrt(pow((arr[spheres * n_cols + 0]-mesh[tri * 9 + 0]),2)+pow((arr[spheres * n_cols + 1]-mesh[tri * 9 + 1]),2)+pow((arr[spheres * n_cols + 2]-mesh[tri * 9 + 2]),2));
 			printf("d1 = %f   ", d1);
@@ -98,7 +102,7 @@ int main() {
 	double ax, ay, az, bx, by, bz, nxx, nyy, nzz, nx, ny, nz;
 	printf("\nNormal Vectors for Triangles\n");
 //	for (spheres = 0; spheres < ns; spheres++) {
-		for (tri = 0; tri < nt; tri++) {
+		for (tri = 0; tri < nTriangles; tri++) {
 			printf("Triangle ID: %d\n", tri);
 			ax = mesh[tri * 9 + 3] - mesh[tri * 9 + 0];
 			ay = mesh[tri * 9 + 4] - mesh[tri * 9 + 1];
@@ -120,7 +124,6 @@ int main() {
 
 
 	//free values
-	free(meshentries);
 	free(mesh);
 	free(radNS);
 	free(arr);
