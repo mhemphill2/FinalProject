@@ -6,7 +6,7 @@
 #include "readInputSpheres.h"
 
 
-//Function to read n spheres, radius and convert input to 1D array
+//Function to read n spheres, radius and convert input to 1D array. Delete two below before final.
 double* readInputSpheres(const char* filename1, double* radius, int* nSpheres) {
 
 	FILE* fp = fopen(filename1, "r");

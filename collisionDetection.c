@@ -39,14 +39,6 @@ int main() {
 	int ns;
 	double* sphereArr = readInputSpheres(filename1, &rad, &ns);
 
-	//double* radNS = (double*)malloc(2 * sizeof(double));
-	//radNS = InputSpheresradNS(filename1);	//Function call to return radius and # of spheres
-	////rad = radNS[0];		//Radius
-	////ns = radNS[1];		//# of spheres
-
-	//int n_rows = ns;
-	//double* arr = (double*)malloc(n_rows * n_cols * sizeof(double));	
-	//arr = InputSpheresCoord(filename1);	//Function call to return array of x,y,z sphere coordinates
 
 //Will remove before final build, TESTING INPUT VALUES
 	printf("Start of triangle TESTING\n");
