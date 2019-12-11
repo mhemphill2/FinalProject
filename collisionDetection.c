@@ -68,7 +68,7 @@ int main() {
 	int spheres, tri;
 	double d1,d2,d3;
 	double ax, ay, az, bx, by, bz, nxx, nyy, nzz, nx, ny, nz;
-	double dpx, dpy, dpz, dist, pox, poy, poz;
+	double dpx, dpy, dpz, dist, pox, poy, poz, D, distance, distancecheck;
 	for (spheres = 0; spheres < ns; spheres++) {
 		for (tri = 0; tri < nTriangles; tri++) {
 			printf("\nSphere ID: %d  ---  Triangle ID: %d\n", spheres, tri);
@@ -107,26 +107,37 @@ int main() {
 			nz = nzz/sqrt(pow(nxx,2)+pow(nyy,2)+pow(nzz,2));
 			printf("nx = %f  :  ny = %f  :  nz = %f\n", nx, ny, nz);
 
-//			D = -(nxx*mesh[tri * 9 + 0])-(nyy*mesh[tri * 9 + 1])-(nzz*mesh[tri * 9 + 2]);
+
 
 			//distance from P to point in plane(on triangle)
-			dpx = ((sphereArr[spheres * n_cols + 0]-mesh[tri * 9 + 0])*nx);
-			dpy = ((sphereArr[spheres * n_cols + 1]-mesh[tri * 9 + 1])*ny);
-			dpz = ((sphereArr[spheres * n_cols + 2]-mesh[tri * 9 + 2])*nz);
+//			dpx = ((sphereArr[spheres * n_cols + 0]-mesh[tri * 9 + 0])*nx);
+//			dpy = ((sphereArr[spheres * n_cols + 1]-mesh[tri * 9 + 1])*ny);
+//			dpz = ((sphereArr[spheres * n_cols + 2]-mesh[tri * 9 + 2])*nz);
 //			printf("dpx = %f  :  dpy = %f  :  dpz = %f\n", dpx, dpy, dpz);
 
+			// determining D for eq of plane
+			D = -(nxx*mesh[tri * 9 + 0])-(nyy*mesh[tri * 9 + 1])-(nzz*mesh[tri * 9 + 2]);
+//			printf("D = %f \n",D);
 
-			// UNSURE OF ACCURACY OF PROJECTED POINT AND CLOSEST POINT
+			// closest distance to plane
+			distance = fabs((sphereArr[spheres * 3 + 0]*nxx)+(sphereArr[spheres * 3 + 1]*nyy)+(sphereArr[spheres * 3 + 2]*nzz) + D)/sqrt(pow(nxx,2)+pow(nyy,2)+pow(nzz,2));
+
+			printf("Distance to closest point on plane = %f \n",distance);
 
 			//Projected point from P to closest point in plane P0
-			pox = (sphereArr[spheres * n_cols + 0]-(dpx*nx));
-			poy = (sphereArr[spheres * n_cols + 1]-(dpy*ny));
-			poz = (sphereArr[spheres * n_cols + 2]-(dpz*nz));
+			pox = (sphereArr[spheres * n_cols + 0]-(distance*nx));
+			poy = (sphereArr[spheres * n_cols + 1]-(distance*ny));
+			poz = (sphereArr[spheres * n_cols + 2]-(distance*nz));
 			printf("New closest point on plane : (pox = %f , poy = %f , poz = %f) \n", pox, poy, poz);
 
-			// closest distance
-			dist = sqrt(pow((sphereArr[spheres * n_cols + 0]-pox),2)+pow((sphereArr[spheres * n_cols + 1]-poy),2)+pow((sphereArr[spheres * n_cols + 2]-poz),2));
-			printf("Distance to closest point on plane = %f \n",dist);			
+			//verifying point accuracy, compare with distance
+			distancecheck = sqrt(pow((sphereArr[spheres * 3 + 0]-pox),2)+pow((sphereArr[spheres * 3 + 1]-poy),2)+pow((sphereArr[spheres * n_cols + 2]-poz),2));
+			printf("Verify distance; d = %f   \n", distancecheck);
+
+
+// closest distance
+// wrong calc - remove			dist = sqrt(pow((sphereArr[spheres * n_cols + 0]-pox),2)+pow((sphereArr[spheres * n_cols + 1]-poy),2)+pow((sphereArr[spheres * n_cols + 2]-poz),2));
+//			printf("Distance to closest point on plane = %f \n",dist);			
 			
 		}
 	}
