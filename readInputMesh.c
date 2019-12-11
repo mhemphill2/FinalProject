@@ -1,7 +1,10 @@
+//Author: Nikolaj Scharling Holm
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "readInputMesh.h"
+
 
 double* readInputMesh(const char* filename, int* nTriangles, int* nMeshEntries) {
 	
@@ -14,10 +17,11 @@ double* readInputMesh(const char* filename, int* nTriangles, int* nMeshEntries) 
 	//Buffer length to string
 	char str[256];
 	int strl = 256;
+	//Make string float value
 	*nTriangles = atof(fgets(str, strl, fp));
 	//nTriangles times 3 rows pr triangle times  entries pr row
 	*nMeshEntries = *nTriangles * 3 * 3;
-	//printf("entry= %d\n", entry);
+	//Allocating memory to store data
 	double* mesh = (double*)malloc(*nMeshEntries*sizeof(double));
 	
 	//nTriangles*3 equals n rows
@@ -34,12 +38,6 @@ double* readInputMesh(const char* filename, int* nTriangles, int* nMeshEntries) 
 			token = strtok(NULL, ",");
 		}
 	}
-
-	//For testing. Delete before final
-//	for(size_t i = 0; i < *nMeshEntries; i++)
-//	{
-//		printf("mesh[%zu]=%lf\n", i, mesh[i]);
-//	}
 
 	fclose(fp);
 

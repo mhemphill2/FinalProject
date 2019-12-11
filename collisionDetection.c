@@ -12,8 +12,8 @@ int main() {
 
 
 	//What is the exact filenames/types and how should we read them? input arguments?
-	const char filename[] = "mesh.input.obj";
-	const char filename1[] = "spheres.input.csv";
+	const char filename[] = "box.obj";
+	const char filename1[] = "test_vercities.csv";
 
 	//Initialize mesh metrics
 	int nTriangles = 0;
