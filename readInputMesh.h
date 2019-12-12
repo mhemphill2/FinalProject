@@ -1,6 +1,4 @@
 // Author: Nikolaj Holm
-
-
 /**
 * \details The function reads data from a file, containing a mesh built of 
 * triangles, store it on the local machine and output a 1D array containing
