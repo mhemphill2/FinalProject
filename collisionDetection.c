@@ -13,12 +13,12 @@ int main() {
 
 	//What is the exact filenames/types and how should we read them? input arguments?
 
-//	const char filename[] = "mesh.input.obj";
-//	const char filename1[] = "spheres.input.csv";
+	const char filename[] = "mesh.input.obj";
+	const char filename1[] = "spheres.input.csv";
 //	const char filename[] = "box.obj";
 //	const char filename1[] = "test_vercities.csv";
-	const char filename[] = "2tri_test.obj";
-	const char filename1[] = "1testsphere.csv";
+//	const char filename[] = "2tri_test.obj";
+//	const char filename1[] = "1testsphere.csv";
 
 
 	//Initialize mesh metrics
@@ -89,6 +89,8 @@ int main() {
 		for (tri = 0; tri < nTriangles; tri++) {
 
 // 1st) point - plane -- then detect if point inside triangle on plane
+			printf("\nSphere ID: %d  ---  Triangle ID: %d\n", sph, tri);
+
 
 			//calculateing normal vector to triangle (p1, p2, p3)
 			// a = p2-p1  ;  b = p3-p1
@@ -155,8 +157,8 @@ int main() {
 			printf("u = %f  v = %f\n", u,v);
 			
 			if (u >= 0 && v >= 0 && u+v <= 1) {
-				printf("Projected point is on or in triangle\n");
-				printf("Projected closest point on plane : (pox = %f , poy = %f , poz = %f) \n", pox, poy, poz);
+// save				printf("Projected point is on or in triangle\n");
+// save				printf("Projected closest point on plane : (pox = %f , poy = %f , poz = %f) \n", pox, poy, poz);
 				// this is closest point, compare to radius
 				// compare po to P with radius
 				// return closest point
@@ -166,10 +168,10 @@ int main() {
 
 			}
 				
-			else {
+//			else {
 				printf("Projected point is NOT on or in triangle\n");
 				//moving on
-			}
+//			}
 			
 			// testing sphere point to all 3 lines			
 			double ab[3] = {mesh[tri * 9 + 3] - mesh[tri * 9 + 0], mesh[tri * 9 + 4] - mesh[tri * 9 + 1], mesh[tri * 9 + 5] - mesh[tri * 9 + 2]};
@@ -184,23 +186,33 @@ int main() {
 			double cp[3] = {sarr[sph * n_cols + 0] - mesh[tri * 9 + 6], sarr[sph * n_cols + 1] - mesh[tri * 9 + 7], sarr[sph * n_cols + 2] - mesh[tri * 9 + 8]};
 
 			// need to loop through 3 lines
-			double t0 = (ab[0]*ap[0])+(ab[1]*ap[1])+(ab[2]*ap[2]);
-			double t1 = (bc[0]*bp[0])+(bc[1]*bp[1])+(bc[2]*bp[2]);
-			double t2 = (ca[0]*cp[0])+(ca[1]*cp[1])+(ca[2]*cp[2]);
+//			double t0 = (ab[0]*ap[0])+(ab[1]*ap[1])+(ab[2]*ap[2]);
+//			double t1 = (bc[0]*bp[0])+(bc[1]*bp[1])+(bc[2]*bp[2]);
+//			double t2 = (ca[0]*cp[0])+(ca[1]*cp[1])+(ca[2]*cp[2]);
+
+			double t0 = ((ab[0]*ap[0])+(ab[1]*ap[1])+(ab[2]*ap[2])) / ((ab[0]*ab[0])+(ab[1]*ab[1])+(ab[2]*ab[2]));
+			double t1 = ((bc[0]*bp[0])+(bc[1]*bp[1])+(bc[2]*bp[2])) / ((bc[0]*bc[0])+(bc[1]*bc[1])+(bc[2]*bc[2]));
+			double t2 = ((ca[0]*cp[0])+(ca[1]*cp[1])+(ca[2]*cp[2])) / ((ca[0]*ca[0])+(ca[1]*ca[1])+(ca[2]*ca[2]));
 			printf("t0 , t1 , t2  =  %f , %f , %f \n", t0, t1, t2);
+
+		//testing
+
+// get rid			printf("ab = %f %f %f ; ap = %f %f %f \n",ab[0],ab[1],ab[2], ap[0], ap[1], ap[2]);
+//			printf("bc = %f %f %f ; bp = %f %f %f \n",bc[0],bc[1],bc[2], bp[0], bp[1], bp[2]);
+//			printf("ca = %f %f %f ; cp = %f %f %f \n",ca[0],ca[1],ca[2], cp[0], cp[1], cp[2]);
 			if ((t0 <= 0 || t0 >= 1) && (t1 <= 0 || t1 >= 1) && (t2 <= 0 || t2 >= 1)){
 				printf("Projected points are not on lines, go to vertices\n");
 			}
 
-			else {
+//			else {
 
-				t0 = t0 / (ab[0]*ab[0])+(ab[1]*ab[1])+(ab[2]*ab[2]);
-				t1 = t1 / (bc[0]*bc[0])+(bc[1]*bc[1])+(bc[2]*bc[2]);
-				t2 = t2 / (ca[0]*ca[0])+(ca[1]*ca[1])+(ca[2]*ca[2]);
+//				t0 = t0 / (ab[0]*ab[0])+(ab[1]*ab[1])+(ab[2]*ab[2]);
+//				t1 = t1 / (bc[0]*bc[0])+(bc[1]*bc[1])+(bc[2]*bc[2]);
+//				t2 = t2 / (ca[0]*ca[0])+(ca[1]*ca[1])+(ca[2]*ca[2]);
 			double  pline0[3] = {mesh[tri * 9 + 0] + (t0*ab[0]), mesh[tri * 9 + 1] + (t0*ab[1]), mesh[tri * 9 + 2] + (t0*ab[2])};
 			double  pline1[3] = {mesh[tri * 9 + 3] + (t1*bc[0]), mesh[tri * 9 + 4] + (t1*bc[1]), mesh[tri * 9 + 5] + (t1*bc[2])};
 			double  pline2[3] = {mesh[tri * 9 + 6] + (t2*ca[0]), mesh[tri * 9 + 7] + (t2*ca[1]), mesh[tri * 9 + 8] + (t2*ca[2])};
-				printf("Projected point on line is closest\n");
+//				printf("Projected point on line is closest\n");
 				printf("New closest point on line : (pline0 = %f ,  %f ,  %f) \n", pline0[0], pline0[1], pline0[2]);
 				printf("New closest point on line : (pline1 = %f ,  %f ,  %f) \n", pline1[0], pline1[1], pline1[2]);
 				printf("New closest point on line : (pline2 = %f ,  %f ,  %f) \n", pline2[0], pline2[1], pline2[2]);
@@ -217,8 +229,8 @@ int main() {
 
 			// Computes point - point (distance from sphere center to each vertex of triangle)
 			// d = sqrt((x2-x1)^2 + (y2-y1)^2 + (z2-z1)^2)
-			printf("\nSphere ID: %d  ---  Triangle ID: %d\n", sph, tri);
-			printf("Distance to vertices\n");
+
+//			printf("Distance to vertices\n");
 			d1 = sqrt(pow((sarr[sph * n_cols + 0]-mesh[tri * 9 + 0]),2)+pow((sarr[sph * n_cols + 1]-mesh[tri * 9 + 1]),2)+pow((sarr[sph * n_cols + 2]-mesh[tri * 9 + 2]),2));
 			printf("d1 = %f   ", d1);
 
@@ -230,7 +242,7 @@ int main() {
 			//will put into array
 
 
-			}  //from 2nd else
+//			}  //from 2nd else
 
 		}
 
