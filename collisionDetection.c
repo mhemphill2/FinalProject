@@ -5,8 +5,14 @@
 
 double *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, double rad) {
 	
+	//output file data
+	char filename[] = "collision_detection.out ";
+	FILE* fp = fopen(filename, "w");
+	fprintf(fp, "s,t\n");
+
 	// Collision detection
 // Need to compute all : 1st) - (point - plane)  ;  2nd) - (point - line)  ;  3rd) - (point - point), 
+
 
 	int n_cols = 3;
 	int sph, tri;
@@ -92,7 +98,7 @@ double *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, d
 					printf("DETECTED FROM POINT IN PLANE\n");
 					printf("SPHERE TRIANGLE INTERSECT: %d, %d\n", sph, tri);
 					printf("Projected closest point on plane : (pox = %f , poy = %f , poz = %f) \n\n", pox, poy, poz);
-					//return ?????
+					fprintf(fp, "%d,%d\n", sph, tri);
 				}
 
 			}
@@ -136,8 +142,7 @@ double *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, d
 					printf("SPHERE TRIANGLE INTERSECT: %d, %d\n", sph, tri);
 					printf("Projected points on line : (%f,  %f,  %f) ; (%f,  %f,  %f) ; (%f,  %f,  %f)\n", pline0[0], pline0[1], pline0[2], pline1[0], pline1[1], pline1[2], pline2[0], pline2[1], pline2[2]);
 					printf("Distances to lines: %f ; %f ; %f \n\n", distpline0, distpline1, distpline2);
-
-					//return ?????
+					fprintf(fp, "%d,%d\n", sph, tri);
 				}
 
 				// 3rd) point - point
@@ -159,7 +164,7 @@ double *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, d
 						printf("DETECTED FROM POINT TO VERTICES\n");
 						printf("SPHERE TRIANGLE INTERSECT: %d, %d\n", sph, tri);
 						printf("Distances to vertices: %f ; %f ; %f \n\n", d1, d2, d3);
-						//return ?????
+						fprintf(fp, "%d,%d\n", sph, tri);
 
 					}
 				}
@@ -168,6 +173,6 @@ double *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, d
 
 	}
 
-
+	fclose(fp);
 	return 0;
 	}
