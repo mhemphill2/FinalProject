@@ -62,12 +62,10 @@ int main() {
 	int sph, tri;
 	double d1,d2,d3;
 	double ax, ay, az, bx, by, bz, nxx, nyy, nzz, nx, ny, nz;	// normal vectors
-	double pox, poy, poz, D, distance, distancecheck;	// distance and projected point on plane
+	double pox, poy, poz, D, distance;	// distance and projected point on plane
 
 
-	double dotAC, dotACAB, dotACAP, dotAB, dotABAP, dottest, u, v;
-	double test[3] = {1,2,3};
-	double test1[3] = {2,3,4};
+	double dotAC, dotACAB, dotACAP, dotAB, dotABAP, u, v;
 
 	for (sph = 0; sph < ns; sph++) {
 		for (tri = 0; tri < nTriangles; tri++) {
