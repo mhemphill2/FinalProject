@@ -10,7 +10,7 @@ double* readInputMesh(const char* filename, int* nTriangles, int* nMeshEntries) 
 	
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
-		printf("Can't open file\n");
+		printf("Can't open mesh file\n");
 		return 1;
 	}
 	
