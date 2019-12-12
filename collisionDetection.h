@@ -3,6 +3,6 @@
 
 #include <stddef.h>
 
-double* collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, double rad);
+int* collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, double rad, int* count);
 
 #endif
