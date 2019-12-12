@@ -1,5 +1,4 @@
 // Author: Michael Hemphill
-
 /**
 * \details The function reads data from a file with a given filename. 
 * The data is stored and return a 1D array containing the sphere
