@@ -13,7 +13,7 @@ int outputFile(int *collisions, int count) {
 	for (int i = 0; i < count;)
 	{
 		fprintf(fp, "%d,%d\n", collisions[i],collisions[i+1]);
-		printf("%d,%d\n", collisions[i],collisions[i+1]);
+//		printf("%d,%d\n", collisions[i],collisions[i+1]);
 		i = i+2;
 	}
 
