@@ -29,7 +29,7 @@ int main() {
 	mesh = readInputMesh(filename, &nTriangles, &nMeshEntries);
 
 //Reading inputs from "readInputsph.c" 
-//	int i,j;
+	int i,j;
 	double rad;
 	int ns;
 	double* sarr = readInputSpheres(filename1, &rad, &ns);
@@ -47,11 +47,8 @@ int main() {
 	cpu_time_used = (((double)(end - start)) / CLOCKS_PER_SEC) * 1000;
 	printf("Collision Detection time in ms: %f\n", cpu_time_used);
 
+
 	printf("count: %d\n", count);
-
-	outputFile(collisions, count);
-
-
 
 	//free values
 	free(collisions);

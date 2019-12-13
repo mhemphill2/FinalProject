@@ -10,7 +10,7 @@ double* readInputSpheres(const char* filename1, double* radius, int* nSpheres) {
 
 	FILE* fp = fopen(filename1, "r");
 	if (!fp) {
-		printf("Can't open sphere file\n");
+		printf("Sphere file not found. Please check that the filename is correct.\n");
 		return 1;
 	}
 
