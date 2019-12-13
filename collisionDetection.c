@@ -10,7 +10,8 @@ int *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, doub
 //	FILE* fp = fopen(filename, "w");
 //	fprintf(fp, "s,t\n");
 
-	int* collisions = (int*)malloc(ns*nTriangles * sizeof(int));
+//	int* collisions = (int*)malloc((2*ns*nTriangles * sizeof(int)) + (3*ns*nTriangles*sizeof(char)));
+	int* collisions = (int*)malloc(2*ns*nTriangles * sizeof(int));
 	int counter = 0;
 
 // Collision detection
@@ -121,8 +122,8 @@ int *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, doub
 
 				// Detects if closest point on line lies within triangle verticies and determines intersection
 				if (((t0 > 0 && t0 < 1) && distpline0 <= rad) || ((t1 > 0 && t1 < 1) && distpline1 <= rad) || ((t2 > 0 && t2 < 1) && distpline2 <= rad)) {
-//					printf("DETECTED FROM POINT TO LINE\n");
-//					printf("SPHERE TRIANGLE INTERSECT: %d, %d\n\n", sph, tri);
+					printf("DETECTED FROM POINT TO LINE\n");
+					printf("SPHERE TRIANGLE INTERSECT: %d, %d\n\n", sph, tri);
 //					fprintf(fp, "%d,%d\n", sph, tri);
 					collisions[counter] = sph;
 					collisions[counter+1] = tri;
@@ -140,8 +141,8 @@ int *collisionDetection(double* mesh, int nTriangles, double* sarr, int ns, doub
 					d3 = sqrt(pow((sarr[sph * n_cols + 0] - mesh[tri * 9 + 6]), 2) + pow((sarr[sph * n_cols + 1] - mesh[tri * 9 + 7]), 2) + pow((sarr[sph * n_cols + 2] - mesh[tri * 9 + 8]), 2));
 
 					if (d1 <= rad || d2 <= rad || d3 <= rad) {
-//						printf("DETECTED FROM POINT TO VERTICES\n");
-//						printf("SPHERE TRIANGLE INTERSECT: %d, %d\n\n", sph, tri);
+						printf("DETECTED FROM POINT TO VERTICES\n");
+						printf("SPHERE TRIANGLE INTERSECT: %d, %d\n\n", sph, tri);
 //						fprintf(fp, "%d,%d\n", sph, tri);
 						collisions[counter] = sph;
 						collisions[counter+1] = tri;

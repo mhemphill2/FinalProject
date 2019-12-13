@@ -5,6 +5,6 @@
 
 #include <stddef.h>
 
-double* outputFile();
+double* outputFile(int *collisions, int count);
 
 #endif
