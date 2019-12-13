@@ -6,9 +6,9 @@
 * **nMeshEntries** during execution, based on the data. The filename must be
 * given.
 * 
-* \param filname Pointer to an array of type char, that contains the filename.
-* \param nTriangles Contains the number of triangles in the mesh.
-* \param nMeshEntries Contains the number of total coordinates in the mesh.
+* \param *filname Pointer to an array of type char, that contains the filename.
+* \param *nTriangles Contains the number of triangles in the mesh.
+* \param *nMeshEntries Contains the number of total coordinates in the mesh.
 *
 * \return Entries Returns an array containing vertities
 *
