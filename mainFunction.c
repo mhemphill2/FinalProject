@@ -9,17 +9,17 @@
 int main() {
 
 // gcc collisionDetection.c readInputsph.c readInputMesh.c -Wall -O3 -o coldet -lm
-	const char filename[] = "mesh.input.obj";
-	const char filename1[] = "spheres.input.csv";
-//	const char filename[] = "box.obj";
-//	const char filename1[] = "test_vercities.csv";
+//	const char filename[] = "mesh.input.obj";
+//	const char filename1[] = "spheres.input.csv";
+	const char filename[] = "box.obj";
+	const char filename1[] = "test_vercities.csv";
 //	const char filename[] = "2tri_test.obj";
 //	const char filename1[] = "1testsphere.csv";
 
 	//Initialize mesh metrics
 	int nTriangles = 0;
 	int nMeshEntries = 0;
-	int count;
+	int count = 0;
 	double* mesh;
 
 
@@ -33,8 +33,6 @@ int main() {
 	double rad;
 	int ns;
 	double* sarr = readInputSpheres(filename1, &rad, &ns);
-
-
 
 	printf("# of Triangles: %d\n", nTriangles);
 
