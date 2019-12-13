@@ -1,3 +1,31 @@
+//Authors: Michael Hemphill and Nikolaj Scharling Holm
+
+/**
+*  \details The main function distribute the work of the collision detection
+* It takes in three input arguments, the first one being the run command,
+* the second one being, the mesh filename and the third being the 
+* sphere filename. 
+*
+* **Notice**: In order for the program to work correctly it is the second
+* command line argument must be the filname for the mesh and vice versa.
+* Other wise the program will switch up the sphere and meshes and outout
+* wrong results or terminate
+*
+* \param argc The number of input argumnets. Must be 3 (program name, mesh 
+* filename and sphere file name)
+* \param *argv[] an array storing the input arguments
+*
+*
+* **Output**
+*
+* - The main function outputs the number of triangles
+* - The number of spheres
+* - A message confirming the result were written to an output file
+* - The time used for computation
+* - The number of collisions
+*
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

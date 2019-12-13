@@ -17,6 +17,7 @@ double* readInputSpheres(const char* filename1, double* radius, int* nSpheres) {
 	char str[256];
 	int strl = 256;
 
+	//Skip first line reading x,y,z
 	fgets(str, strl, fp);
 
 	//Define radius and nSpheres
