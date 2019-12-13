@@ -5,6 +5,7 @@
 #include "readInputMesh.h"
 #include "readInputSpheres.h"
 #include "collisionDetection.h"
+#include "outputFile.h"
 
 int main() {
 //int main(int argc, char* argv[]) {
@@ -22,10 +23,10 @@ int main() {
 // gcc collisionDetection.c readInputsph.c readInputMesh.c -Wall -O3 -o coldet -lm
 //	const char filename[] = "mesh.input.obj";
 //	const char filename1[] = "spheres.input.csv";
-//	const char filename[] = "box.obj";
-//	const char filename1[] = "test_vercities.csv";
-	const char filename[] = "test_tri.obj";
-	const char filename1[] = "test_sphere.csv";
+	const char filename[] = "box.obj";
+	const char filename1[] = "test_vercities.csv";
+//	const char filename[] = "test_tri.obj";
+//	const char filename1[] = "test_sphere.csv";
 
 	//Initialize mesh metrics
 	int nTriangles = 0;

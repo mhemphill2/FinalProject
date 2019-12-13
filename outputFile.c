@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "outputFile.h"
 
 //sugested input arguments is an array storing the collisions 
 //ID's and the length of this array
-int outputFile(int *collisions, int count) {
+int* outputFile(int *collisions, int count) {
 
 	const char filenamew[] = "collision_detection.out";
 	FILE* fp = fopen(filenamew, "w");
