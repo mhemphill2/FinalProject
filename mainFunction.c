@@ -6,13 +6,22 @@
 #include "readInputSpheres.h"
 #include "collisionDetection.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 
+	if (argc < 3)
+	{
+		printf("Enter name of input.mesh file and input.sphere file. Include filetype identifyer.\n eg. \"input.mesh.obj input.sphere.csv\"\n");
+		return 0;
+	}
+
+	char* filename = argv[1];
+	char* filename1 = argv[2];
+	//printf("%s %s\n", t_filename, t_filename1);
 // gcc collisionDetection.c readInputsph.c readInputMesh.c -Wall -O3 -o coldet -lm
 //	const char filename[] = "mesh.input.obj";
 //	const char filename1[] = "spheres.input.csv";
-	const char filename[] = "box.obj";
-	const char filename1[] = "test_vercities.csv";
+	/*const char filename[] = "box.obj";
+	const char filename1[] = "test_vercities.csv";*/
 //	const char filename[] = "2tri_test.obj";
 //	const char filename1[] = "1testsphere.csv";
 
@@ -27,12 +36,18 @@ int main() {
 
 	//ReadInputMesh returning 1D array containing values
 	mesh = readInputMesh(filename, &nTriangles, &nMeshEntries);
+	if (mesh == 1) {
+		return 0;
+	}
 
 //Reading inputs from "readInputsph.c" 
 	int i,j;
 	double rad;
 	int ns;
 	double* sarr = readInputSpheres(filename1, &rad, &ns);
+	if (sarr == 1) {
+		return 0;
+	}
 
 	printf("# of Triangles: %d\n", nTriangles);
 
