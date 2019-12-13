@@ -7,10 +7,10 @@ The program was created to detect collisions between a mesh consisting
 of af number of triangles and a number of spheres with a given radius
 and center point. 
 
-##########################################################################
-
 The program was made as the final project concluding the course
 ME459 lectured by Prof. Dan Negrut on UW-Madison fall 2019
+
+##################################################################################
 
 How can I run the program?
 The program is built using CMake, making it easy to run the program on your own computer no matter which platform it is based on. Beneath are the instruction step to compile and run the program using a shell on a linux machine
